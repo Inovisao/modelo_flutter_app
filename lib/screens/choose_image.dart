@@ -16,8 +16,6 @@ class ImagePickerScreen extends ConsumerStatefulWidget {
 }
 
 class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
-  final baseNameFromDate = dateReplaceAll(DateTime.now().toString());
-
   File? _selectedImagePano;
   File? _selectedImageForm;
 
@@ -26,11 +24,17 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
       return;
     }
 
+    final creationDate = dateReplaceAll(DateTime.now().toString());
+
     ref.read(userImagesProvider.notifier).addImages(
-          baseNameFromDate,
+          creationDate,
           _selectedImageForm!,
           _selectedImagePano!,
         );
+    setState(() {
+      _selectedImageForm = null;
+      _selectedImagePano = null;
+    });
   }
 
   @override
@@ -64,7 +68,7 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  print(baseNameFromDate);
+                  print(dateReplaceAll(DateTime.now().toString()));
                 },
                 child: const Text('Upload'),
               ),

@@ -24,6 +24,9 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               ImageInput(
                 onPickImage: (image) {
                   _selectedImagePano = image;

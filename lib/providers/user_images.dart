@@ -12,7 +12,7 @@ Future<Database> _getDatabase() async {
     path.join(dbPath, 'images.db'),
     onCreate: (db, version) {
       return db.execute(
-          'CREATE TABLE user_images(id TEXT PRIMARY KEY, name TEXT, imageForm TEXT,  imagePano TEXT,)');
+          'CREATE TABLE user_images(id TEXT PRIMARY KEY, creation_date TEXT, imageForm TEXT,  imagePano TEXT,)');
     },
     version: 1,
   );
@@ -29,7 +29,7 @@ class UserImagesNotifier extends StateNotifier<List<ImageCoupleItem>> {
         .map(
           (row) => ImageCoupleItem(
             id: row['id'] as String,
-            name: row['title'] as String,
+            creationDate: row['creation_date'] as String,
             imageForm: File(row['image_form'] as String),
             imagePano: File(row['image_pano'] as String),
           ),
@@ -39,7 +39,7 @@ class UserImagesNotifier extends StateNotifier<List<ImageCoupleItem>> {
     state = images;
   }
 
-  void addImages(String name, File imageForm, File imagePano) async {
+  void addImages(String creationDate, File imageForm, File imagePano) async {
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final filenameForm = path.basename(imageForm.path);
     final filenamePano = path.basename(imagePano.path);
@@ -49,12 +49,12 @@ class UserImagesNotifier extends StateNotifier<List<ImageCoupleItem>> {
         await imagePano.copy('${appDir.path}/$filenamePano');
 
     final newImageEntry =
-        ImageCoupleItem(name: name, imagePano: imagePano, imageForm: imageForm);
+        ImageCoupleItem(creationDate: creationDate, imagePano: imagePano, imageForm: imageForm);
 
     final db = await _getDatabase();
     db.insert('user_images', {
       'id': newImageEntry.id,
-      'title': newImageEntry.name,
+      'creation_date': newImageEntry.creationDate,
       'image_form': newImageEntry.imageForm.path,
       'image_pano': newImageEntry.imagePano.path,
     });

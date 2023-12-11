@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:app_skeleton/models/image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart' as syspaths;
+// import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
@@ -12,7 +12,7 @@ Future<Database> _getDatabase() async {
     path.join(dbPath, 'images.db'),
     onCreate: (db, version) {
       return db.execute(
-          'CREATE TABLE user_images(id TEXT PRIMARY KEY, creation_date TEXT, imageForm TEXT,  imagePano TEXT,)');
+          'CREATE TABLE user_images(id TEXT PRIMARY KEY, creation_date TEXT, image_Form_Url TEXT,  image_Pano_Url TEXT,)');
     },
     version: 1,
   );
@@ -30,8 +30,8 @@ class UserImagesNotifier extends StateNotifier<List<ImageCoupleItem>> {
           (row) => ImageCoupleItem(
             id: row['id'] as String,
             creationDate: row['creation_date'] as String,
-            imageForm: File(row['image_form'] as String),
-            imagePano: File(row['image_pano'] as String),
+            imageForm: File(row['image_Form_Url'] as String),
+            imagePano: File(row['image_Pano_Url'] as String),
           ),
         )
         .toList();
@@ -40,13 +40,13 @@ class UserImagesNotifier extends StateNotifier<List<ImageCoupleItem>> {
   }
 
   void addImages(String creationDate, File imageForm, File imagePano) async {
-    final appDir = await syspaths.getApplicationDocumentsDirectory();
-    final filenameForm = path.basename(imageForm.path);
-    final filenamePano = path.basename(imagePano.path);
-    final copiedImageForm =
-        await imageForm.copy('${appDir.path}/$filenameForm');
-    final copiedImagePano =
-        await imagePano.copy('${appDir.path}/$filenamePano');
+    // final appDir = await syspaths.getApplicationDocumentsDirectory();
+    // final filenameForm = path.basename(imageForm.path);
+    // final filenamePano = path.basename(imagePano.path);
+    // final copiedImageForm =
+    //     await imageForm.copy('${appDir.path}/$filenameForm');
+    // final copiedImagePano =
+    //     await imagePano.copy('${appDir.path}/$filenamePano');
 
     final newImageEntry =
         ImageCoupleItem(creationDate: creationDate, imagePano: imagePano, imageForm: imageForm);

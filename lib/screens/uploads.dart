@@ -17,7 +17,15 @@ class _UploadsScreenState extends State<UploadsScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.upload)),
+          Text('${items.length} items in queue'),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.upload),
+          ),
         ], //TODO: force upload
       ),
       body: ListView.builder(

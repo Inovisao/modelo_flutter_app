@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // TODO: change home value for Streambuilder when firebase is running
-      // TODO: auth or choose image screen dependning if the user is logged in or not
+      // TODO: auth or choose image screen dependning if the use r is logged in or not
       home: const AuthScreen(),
     );
   }

@@ -26,53 +26,57 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
 
     final creationDate = dateReplaceAll(DateTime.now().toString());
 
-    ref.read(userImagesProvider.notifier).addImages(
-          creationDate,
-          _selectedImageForm!,
-          _selectedImagePano!,
-        );
-    
+    // ref.read(userImagesProvider.notifier).addImages(
+    //       creationDate,
+    //       _selectedImageForm!,
+    //       _selectedImagePano!,
+    //     );
+
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              ImageInput(
-                onPickImage: (image) {
-                  _selectedImagePano = image;
-                },
-                photoContainerTitle: 'photo pano',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ImageInput(
-                onPickImage: (image) {
-                  _selectedImageForm = image;
-                },
-                photoContainerTitle: 'photo Form',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  print(dateReplaceAll(DateTime.now().toString()));
-                },
-                child: const Text('Upload'),
-              ),
-            ],
-          ),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Add new photos'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
+      body: Center(
+        child: ListView(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                ImageInput(
+                  onPickImage: (image) {
+                    _selectedImagePano = image;
+                  },
+                  photoContainerTitle: 'photo pano',
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ImageInput(
+                  onPickImage: (image) {
+                    _selectedImageForm = image;
+                  },
+                  photoContainerTitle: 'photo Form',
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  onPressed: _saveImages,
+                  child: const Text('Upload'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

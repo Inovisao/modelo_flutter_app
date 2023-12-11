@@ -38,14 +38,19 @@ class _UploadsScreenState extends State<UploadsScreen> {
       body: ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            leading: const CircleAvatar(
-              radius: 26,
-              child: Icon(Icons.photo),
+          return Dismissible(
+            key: Key(
+              index.toString(),
             ),
-            title: Text(items[index]),
-            subtitle: const Text('Image creation date'),
-            trailing: const Icon(Icons.file_upload_off),
+            child: ListTile(
+              leading: const CircleAvatar(
+                radius: 26,
+                child: Icon(Icons.photo),
+              ),
+              title: Text(items[index]),
+              subtitle: const Text('Image creation date'),
+              trailing: const Icon(Icons.file_upload_off),
+            ),
           );
         },
       ),

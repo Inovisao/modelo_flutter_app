@@ -10,6 +10,8 @@ class UploadsScreen extends StatefulWidget {
 }
 
 class _UploadsScreenState extends State<UploadsScreen> {
+  final items = List<String>.generate(10, (index) => 'Item ${index + 1}');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,15 +20,19 @@ class _UploadsScreenState extends State<UploadsScreen> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.upload)),
         ], //TODO: force upload
       ),
-      body: const ListTile(
-        //TODO: create ListTile.builder for images in queue
-        leading: CircleAvatar(
-          radius: 26,
-          child: Icon(Icons.photo),
-        ),
-        title: Text('Image name'),
-        subtitle: Text('Image creation date'),
-        trailing: Icon(Icons.file_upload_off),
+      body: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: const CircleAvatar(
+              radius: 26,
+              child: Icon(Icons.photo),
+            ),
+            title: Text(items[index]),
+            subtitle: const Text('Image creation date'),
+            trailing: const Icon(Icons.file_upload_off),
+          );
+        },
       ),
     );
   }

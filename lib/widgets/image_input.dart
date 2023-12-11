@@ -3,12 +3,14 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ImageInput extends StatefulWidget {
-  const ImageInput({super.key, required this.onPickImage, this.photoContainerTitle='Take picture'});
+  const ImageInput(
+      {super.key,
+      required this.onPickImage,
+      this.photoContainerTitle = 'Take picture'});
 
   final void Function(File image) onPickImage;
 
   final String photoContainerTitle;
-  
 
   @override
   State<ImageInput> createState() {
@@ -22,7 +24,25 @@ class _ImageInputState extends State<ImageInput> {
     final imagePicker = ImagePicker();
     final pickedImage = await imagePicker.pickImage(
       source: ImageSource.camera,
-      maxWidth: 600,
+      //maxWidth: 600,
+    );
+
+    if (pickedImage == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedImage = File(pickedImage.path);
+    });
+
+    widget.onPickImage(_selectedImage!);
+  }
+
+  void _choosePicture() async {
+    final imagePicker = ImagePicker();
+    final pickedImage = await imagePicker.pickImage(
+      source: ImageSource.gallery,
+      //maxWidth: 600,
     );
 
     if (pickedImage == null) {
@@ -38,10 +58,20 @@ class _ImageInputState extends State<ImageInput> {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = TextButton.icon(
-      onPressed: _takePicture,
-      icon: const Icon(Icons.camera),
-      label: Text(widget.photoContainerTitle),
+    Widget content = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton.icon(
+          onPressed: _takePicture,
+          icon: const Icon(Icons.camera),
+          label: Text("Take ${widget.photoContainerTitle}"),
+        ),
+        TextButton.icon(
+          onPressed: _choosePicture,
+          icon: const Icon(Icons.folder_copy_rounded),
+          label: Text("Choose ${widget.photoContainerTitle}"),
+        ),
+      ],
     );
 
     if (_selectedImage != null) {

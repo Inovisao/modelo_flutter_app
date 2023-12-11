@@ -31,10 +31,8 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
           _selectedImageForm!,
           _selectedImagePano!,
         );
-    setState(() {
-      _selectedImageForm = null;
-      _selectedImagePano = null;
-    });
+    
+    Navigator.of(context).pop();
   }
 
   @override

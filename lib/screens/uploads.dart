@@ -1,3 +1,4 @@
+import 'package:app_skeleton/screens/choose_image.dart';
 import 'package:flutter/material.dart';
 
 class UploadsScreen extends StatefulWidget {
@@ -19,7 +20,13 @@ class _UploadsScreenState extends State<UploadsScreen> {
         actions: [
           Text('${items.length} items in queue'),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => const ImagePickerScreen(),
+                ),
+              );
+            },
             icon: const Icon(Icons.add),
           ),
           IconButton(

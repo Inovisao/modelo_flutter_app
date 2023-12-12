@@ -13,33 +13,40 @@ class UploadsScreen extends StatefulWidget {
 
 class _UploadsScreenState extends State<UploadsScreen> {
   //final _items = List<String>.generate(10, (index) => 'Item ${index + 1}');
-  final _items = List<String>.generate(
-    10,
-    (index) => UniqueKey().toString(),
-  );
+  final _allCouples = [];
+
+  void _addPhotos() async {
+    final newPhotoCouple = await Navigator.of(context).push<PhotoCouple>(
+      MaterialPageRoute(
+        builder: (ctx) => const ImagePickerScreen(),
+      ),
+    );
+
+    if (newPhotoCouple == null) {
+      return;
+    }
+
+    setState(() {
+      _allCouples.add(newPhotoCouple);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     void _removePhotos(String item) {
-      final index = _items.indexOf(item);
+      final index = _allCouples.indexOf(item);
 
       setState(() {
-        _items.remove(item);
+        _allCouples.remove(item);
       });
     }
 
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Text('${_items.length} items in queue'),
+          Text('${_allCouples.length} items in queue'),
           IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (ctx) => const ImagePickerScreen(),
-                ),
-              );
-            },
+            onPressed: _addPhotos,
             icon: const Icon(Icons.add),
           ),
           IconButton(
@@ -49,22 +56,22 @@ class _UploadsScreenState extends State<UploadsScreen> {
         ], //TODO: force upload
       ),
       body: ListView.builder(
-        itemCount: _items.length,
+        itemCount: _allCouples.length,
         itemBuilder: (context, index) {
           return Dismissible(
             onDismissed: (direction) {
-              _removePhotos(_items[index]);
-              print(_items);
+              _removePhotos(_allCouples[index]);
+              print(_allCouples);
             },
             key: Key(
-              _items[index],
+              _allCouples[index],
             ),
             child: ListTile(
               leading: const CircleAvatar(
                 radius: 26,
                 child: Icon(Icons.photo),
               ),
-              title: Text(_items[index]),
+              title: Text(_allCouples[index]),
               subtitle: const Text('Photo creation date'),
               trailing: const Icon(Icons.file_upload_off),
             ),

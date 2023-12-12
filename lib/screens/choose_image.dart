@@ -32,7 +32,7 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   const Text('Please choose two images'),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   ElevatedButton(

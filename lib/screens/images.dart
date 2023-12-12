@@ -1,5 +1,4 @@
 import 'package:app_skeleton/screens/auth.dart';
-import 'package:app_skeleton/screens/choose_image.dart';
 import 'package:app_skeleton/screens/uploads.dart';
 import 'package:flutter/material.dart';
 
@@ -13,17 +12,8 @@ class ImageScreen extends StatefulWidget {
 }
 
 class _ImageScreenState extends State<ImageScreen> {
-  int _selectedPageIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    Widget activePage = const ImagePickerScreen();
-    var activePageTitle = 'Take a picture';
-
-    if (_selectedPageIndex == 1) {
-      activePage = const UploadsScreen();
-      activePageTitle = 'Uploads';
-    }
 
     void _onLogoutTap() async {
     Navigator.of(context).pop();
@@ -36,7 +26,7 @@ class _ImageScreenState extends State<ImageScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(activePageTitle),
+        title: const Text('Picture Queue'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
@@ -45,26 +35,7 @@ class _ImageScreenState extends State<ImageScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedPageIndex,
-        onDestinationSelected: (int index) {
-          //TODO: MaterialPageRoute to Uploads and Photos Screen
-          setState(() {
-            _selectedPageIndex = index;
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.photo),
-            label: 'Photos',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.upload_file),
-            label: 'Uploads',
-          ),
-        ],
-      ),
-      body: activePage,
+      body: const UploadsScreen(),
     );
   }
 }

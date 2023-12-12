@@ -18,7 +18,7 @@ class _AuthScreenState extends State<AuthScreen> {
     Navigator.of(context).pop();
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => const ImageScreen(),
+        builder: (ctx) => const PhotoScreen(),
       ),
     );
   }
@@ -27,7 +27,7 @@ class _AuthScreenState extends State<AuthScreen> {
     Navigator.of(context).pop();
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => const ImageScreen(),
+        builder: (ctx) => const PhotoScreen(),
       ),
     );
   }

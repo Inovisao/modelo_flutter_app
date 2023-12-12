@@ -2,16 +2,16 @@ import 'package:app_skeleton/screens/auth.dart';
 import 'package:app_skeleton/screens/uploads.dart';
 import 'package:flutter/material.dart';
 
-class ImageScreen extends StatefulWidget {
-  const ImageScreen({super.key});
+class PhotoScreen extends StatefulWidget {
+  const PhotoScreen({super.key});
 
   @override
-  State<ImageScreen> createState() {
-    return _ImageScreenState();
+  State<PhotoScreen> createState() {
+    return _PhotoScreenState();
   }
 }
 
-class _ImageScreenState extends State<ImageScreen> {
+class _PhotoScreenState extends State<PhotoScreen> {
   @override
   Widget build(BuildContext context) {
 

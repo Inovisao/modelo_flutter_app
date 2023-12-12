@@ -22,7 +22,7 @@ Future<Database> _getDatabase() async {
 class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
   UserImagesNotifier() : super(const []);
 
-  Future<void> loadImages() async {
+  Future<void> loadPhotos() async {
     final db = await _getDatabase();
     final data = await db.query('user_images');
     final images = data
@@ -39,7 +39,7 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
     state = images;
   }
 
-  void addImages(String creationDate, File imageForm, File imagePano) async {
+  void addPhotos(String creationDate, File imageForm, File imagePano) async {
     // final appDir = await syspaths.getApplicationDocumentsDirectory();
     // final filenameForm = path.basename(imageForm.path);
     // final filenamePano = path.basename(imagePano.path);
@@ -55,8 +55,8 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
     db.insert('user_images', {
       'id': newImageEntry.id,
       'creation_date': newImageEntry.creationDate,
-      'image_form': newImageEntry.imageForm.path,
-      'image_pano': newImageEntry.imagePano.path,
+      'image_Form_Url': newImageEntry.imageForm.path,
+      'image_Pano_Url': newImageEntry.imagePano.path,
     });
 
     state = [newImageEntry, ...state];

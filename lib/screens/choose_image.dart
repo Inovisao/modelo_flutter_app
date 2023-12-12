@@ -19,7 +19,7 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
   File? _selectedImagePano;
   File? _selectedImageForm;
 
-  void _saveImages() {
+  void _savePhotos() {
     if (_selectedImageForm == null || _selectedImagePano == null) {
       return;
     }
@@ -70,7 +70,7 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
                   height: 10,
                 ),
                 ElevatedButton(
-                  onPressed: _saveImages,
+                  onPressed: _savePhotos,
                   child: const Text('Upload'),
                 ),
               ],

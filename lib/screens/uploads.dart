@@ -65,7 +65,7 @@ class _UploadsScreenState extends State<UploadsScreen> {
                 child: Icon(Icons.photo),
               ),
               title: Text(_items[index]),
-              subtitle: const Text('Image creation date'),
+              subtitle: const Text('Photo creation date'),
               trailing: const Icon(Icons.file_upload_off),
             ),
           );

@@ -3,8 +3,8 @@ import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
 
-class ImageCoupleItem {
-  ImageCoupleItem({
+class PhotoCouple {
+  PhotoCouple({
     required this.creationDate,
     required this.imagePano,
     required this.imageForm,

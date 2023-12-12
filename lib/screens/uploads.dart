@@ -1,3 +1,4 @@
+import 'package:app_skeleton/models/image.dart';
 import 'package:app_skeleton/screens/choose_image.dart';
 import 'package:flutter/material.dart';
 
@@ -11,14 +12,26 @@ class UploadsScreen extends StatefulWidget {
 }
 
 class _UploadsScreenState extends State<UploadsScreen> {
-  final items = List<String>.generate(10, (index) => 'Item ${index + 1}');
+  //final _items = List<String>.generate(10, (index) => 'Item ${index + 1}');
+  final _items = List<String>.generate(
+    10,
+    (index) => UniqueKey().toString(),
+  );
 
   @override
   Widget build(BuildContext context) {
+    void _removePhotos(String item) {
+      final index = _items.indexOf(item);
+
+      setState(() {
+        _items.remove(item);
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Text('${items.length} items in queue'),
+          Text('${_items.length} items in queue'),
           IconButton(
             onPressed: () {
               Navigator.of(context).push(
@@ -36,18 +49,22 @@ class _UploadsScreenState extends State<UploadsScreen> {
         ], //TODO: force upload
       ),
       body: ListView.builder(
-        itemCount: items.length,
+        itemCount: _items.length,
         itemBuilder: (context, index) {
           return Dismissible(
+            onDismissed: (direction) {
+              _removePhotos(_items[index]);
+              print(_items);
+            },
             key: Key(
-              index.toString(),
+              _items[index],
             ),
             child: ListTile(
               leading: const CircleAvatar(
                 radius: 26,
                 child: Icon(Icons.photo),
               ),
-              title: Text(items[index]),
+              title: Text(_items[index]),
               subtitle: const Text('Image creation date'),
               trailing: const Icon(Icons.file_upload_off),
             ),

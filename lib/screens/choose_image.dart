@@ -19,8 +19,31 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
   File? _selectedImagePano;
   File? _selectedImageForm;
 
-  void _saveImages() {
+  void _savePhotos() {
     if (_selectedImageForm == null || _selectedImagePano == null) {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SizedBox(
+            height: 130,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text('Please choose two images'),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Close'))
+                ],
+              ),
+            ),
+          );
+        },
+      );
       return;
     }
 
@@ -70,7 +93,7 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
                   height: 10,
                 ),
                 ElevatedButton(
-                  onPressed: _saveImages,
+                  onPressed: _savePhotos,
                   child: const Text('Upload'),
                 ),
               ],

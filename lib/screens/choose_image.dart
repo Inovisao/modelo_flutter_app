@@ -5,6 +5,7 @@ import 'package:app_skeleton/widgets/date_replacer.dart';
 import 'package:app_skeleton/widgets/image_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:native_exif/native_exif.dart';
 
 class ImagePickerScreen extends ConsumerStatefulWidget {
   const ImagePickerScreen({super.key});
@@ -18,6 +19,7 @@ class ImagePickerScreen extends ConsumerStatefulWidget {
 class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
   File? _selectedImagePano;
   File? _selectedImageForm;
+
 
   void _savePhotos() {
     if (_selectedImageForm == null || _selectedImagePano == null) {

@@ -48,8 +48,7 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
     }
 
     final creationDate = dateReplaceAll(DateTime.now().toString());
-    
-    // TODO: read notifier and run AddPhotos()
+
     // ref.read(userImagesProvider.notifier).addImages(
     //       creationDate,
     //       _selectedImageForm!,

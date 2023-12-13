@@ -12,8 +12,6 @@ class UploadsScreen extends StatefulWidget {
 }
 
 class _UploadsScreenState extends State<UploadsScreen> {
-  // TODO: initState to read notifier and loadPhotos() that have not been uploaded yet
-
   //final _items = List<String>.generate(10, (index) => 'Item ${index + 1}');
   final _allCouples = [];
 
@@ -35,7 +33,6 @@ class _UploadsScreenState extends State<UploadsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: create variable to watch notifier,use it for FutureBuilder
     void _removePhotos(String item) {
       final index = _allCouples.indexOf(item);
 

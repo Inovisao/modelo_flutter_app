@@ -28,8 +28,8 @@ class PhotoCoupleList extends StatelessWidget{
                 backgroundImage: FileImage(photoCouples[index].imagePano),
               ),
               title: Text(photoCouples[index].id),
-              subtitle: Text('Sent at ${DateTime.now()}'),
-              trailing: const Icon(Icons.file_upload_off),
+              subtitle: Text('Sent at ${photoCouples[index].creationDate}'),
+              trailing: photoCouples[index].isUploaded==0 ? const Icon(Icons.file_upload_off) : const Icon(Icons.file_upload),
             );
           },
         );

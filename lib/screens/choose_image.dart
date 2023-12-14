@@ -49,11 +49,11 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
 
     final creationDate = dateReplaceAll(DateTime.now().toString());
 
-    // ref.read(userImagesProvider.notifier).addPhotos(
-    //       creationDate,
-    //       _selectedImageForm!,
-    //       _selectedImagePano!,
-    //     );
+    ref.read(userImagesProvider.notifier).addPhotos(
+          creationDate,
+          _selectedImageForm!,
+          _selectedImagePano!,
+        );
 
     Navigator.of(context).pop();
   }

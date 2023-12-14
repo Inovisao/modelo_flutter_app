@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:app_skeleton/screens/auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   // TODO: Firebase initialization
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -7,15 +7,24 @@ import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
 
 Future<Database> _getDatabase() async {
+  bool dropTable = false;
+
   final dbPath = await sql.getDatabasesPath();
+
   final db = await sql.openDatabase(
     path.join(dbPath, 'images.db'),
     onCreate: (db, version) {
       return db.execute(
-          'CREATE TABLE user_images(id TEXT PRIMARY KEY, creation_date TEXT, image_Form_Url TEXT,  image_Pano_Url TEXT,)');
+        'CREATE TABLE user_images(id TEXT PRIMARY KEY, creation_date TEXT NOT NULL, image_Form_Url TEXT NOT NULL, image_Pano_Url TEXT NOT NULL, uploaded INTEGER DEFAULT 0);',
+      );
     },
     version: 1,
   );
+
+  // if(dropTable){
+  //   await db.delete('user_images');
+  // }
+
   return db;
 }
 
@@ -32,6 +41,7 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
             creationDate: row['creation_date'] as String,
             imageForm: File(row['image_Form_Url'] as String),
             imagePano: File(row['image_Pano_Url'] as String),
+            isUploaded: row['uploaded'] as int,
           ),
         )
         .toList();
@@ -48,8 +58,8 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
     // final copiedImagePano =
     //     await imagePano.copy('${appDir.path}/$filenamePano');
 
-    final newImageEntry =
-        PhotoCouple(creationDate: creationDate, imagePano: imagePano, imageForm: imageForm);
+    final newImageEntry = PhotoCouple(
+        creationDate: creationDate, imagePano: imagePano, imageForm: imageForm);
 
     final db = await _getDatabase();
     db.insert('user_images', {
@@ -57,6 +67,7 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
       'creation_date': newImageEntry.creationDate,
       'image_Form_Url': newImageEntry.imageForm.path,
       'image_Pano_Url': newImageEntry.imagePano.path,
+      'uploaded': newImageEntry.isUploaded,
     });
 
     state = [newImageEntry, ...state];

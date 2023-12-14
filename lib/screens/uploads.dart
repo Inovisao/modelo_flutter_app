@@ -1,37 +1,53 @@
-import 'package:app_skeleton/models/image.dart';
+import 'package:app_skeleton/providers/user_images.dart';
 import 'package:app_skeleton/screens/choose_image.dart';
+import 'package:app_skeleton/widgets/photo_couple_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UploadsScreen extends StatefulWidget {
+class UploadsScreen extends ConsumerStatefulWidget {
   const UploadsScreen({super.key});
 
   @override
-  State<UploadsScreen> createState() {
+  ConsumerState<UploadsScreen> createState() {
     return _UploadsScreenState();
   }
 }
 
-class _UploadsScreenState extends State<UploadsScreen> {
+class _UploadsScreenState extends ConsumerState<UploadsScreen> {
+  late Future<void> _photosFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _photosFuture = ref.read(userImagesProvider.notifier).loadPhotos();
+  }
   //final _items = List<String>.generate(10, (index) => 'Item ${index + 1}');
-  final _items = List<String>.generate(
-    10,
-    (index) => UniqueKey().toString(),
-  );
+  // final List<PhotoCouple> _allCouples = [];
+
+  // void _addPhotos() async {
+  //   final newPhotoCouple = await Navigator.of(context).push<PhotoCouple>(
+  //     MaterialPageRoute(
+  //       builder: (ctx) => const ImagePickerScreen(),
+  //     ),
+  //   );
+
+  //   if (newPhotoCouple == null) {
+  //     return;
+  //   }
+
+  //   setState(() {
+  //     _allCouples.add(newPhotoCouple);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    void _removePhotos(String item) {
-      final index = _items.indexOf(item);
-
-      setState(() {
-        _items.remove(item);
-      });
-    }
+    final userPhotoCouples = ref.watch(userImagesProvider);
 
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Text('${_items.length} items in queue'),
+          Text('${userPhotoCouples.length} items in queue'),
           IconButton(
             onPressed: () {
               Navigator.of(context).push(
@@ -48,28 +64,19 @@ class _UploadsScreenState extends State<UploadsScreen> {
           ),
         ], //TODO: force upload
       ),
-      body: ListView.builder(
-        itemCount: _items.length,
-        itemBuilder: (context, index) {
-          return Dismissible(
-            onDismissed: (direction) {
-              _removePhotos(_items[index]);
-              print(_items);
-            },
-            key: Key(
-              _items[index],
-            ),
-            child: ListTile(
-              leading: const CircleAvatar(
-                radius: 26,
-                child: Icon(Icons.photo),
-              ),
-              title: Text(_items[index]),
-              subtitle: const Text('Photo creation date'),
-              trailing: const Icon(Icons.file_upload_off),
-            ),
-          );
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FutureBuilder(
+          future: _photosFuture,
+          builder: (context, snapshot) =>
+              snapshot.connectionState == ConnectionState.waiting
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : PhotoCoupleList(
+                      photoCouples: userPhotoCouples,
+                    ),
+        ),
       ),
     );
   }

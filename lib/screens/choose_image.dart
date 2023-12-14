@@ -32,7 +32,7 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   const Text('Please choose two images'),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   ElevatedButton(
@@ -49,11 +49,11 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
 
     final creationDate = dateReplaceAll(DateTime.now().toString());
 
-    // ref.read(userImagesProvider.notifier).addImages(
-    //       creationDate,
-    //       _selectedImageForm!,
-    //       _selectedImagePano!,
-    //     );
+    ref.read(userImagesProvider.notifier).addPhotos(
+          creationDate,
+          _selectedImageForm!,
+          _selectedImagePano!,
+        );
 
     Navigator.of(context).pop();
   }

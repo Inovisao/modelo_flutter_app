@@ -12,7 +12,7 @@ Future<Database> _getDatabase() async {
     path.join(dbPath, 'images.db'),
     onCreate: (db, version) {
       return db.execute(
-          'CREATE TABLE user_images(id TEXT PRIMARY KEY, creation_date TEXT, image_Form_Url TEXT,  image_Pano_Url TEXT,)');
+          'CREATE TABLE user_images(id TEXT PRIMARY KEY, creation_date TEXT NOT NULL, image_Form_Url TEXT NOT NULL,  image_Pano_Url TEXT NOT NULL,)');
     },
     version: 1,
   );
@@ -48,8 +48,8 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
     // final copiedImagePano =
     //     await imagePano.copy('${appDir.path}/$filenamePano');
 
-    final newImageEntry =
-        PhotoCouple(creationDate: creationDate, imagePano: imagePano, imageForm: imageForm);
+    final newImageEntry = PhotoCouple(
+        creationDate: creationDate, imagePano: imagePano, imageForm: imageForm);
 
     final db = await _getDatabase();
     db.insert('user_images', {

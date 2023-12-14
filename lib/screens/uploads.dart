@@ -1,5 +1,6 @@
 import 'package:app_skeleton/models/image.dart';
 import 'package:app_skeleton/screens/choose_image.dart';
+import 'package:app_skeleton/widgets/photo_couple_list.dart';
 import 'package:flutter/material.dart';
 
 class UploadsScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class UploadsScreen extends StatefulWidget {
 
 class _UploadsScreenState extends State<UploadsScreen> {
   //final _items = List<String>.generate(10, (index) => 'Item ${index + 1}');
-  final _allCouples = [];
+  final List<PhotoCouple> _allCouples = [];
 
   void _addPhotos() async {
     final newPhotoCouple = await Navigator.of(context).push<PhotoCouple>(
@@ -33,13 +34,6 @@ class _UploadsScreenState extends State<UploadsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void _removePhotos(String item) {
-      final index = _allCouples.indexOf(item);
-
-      setState(() {
-        _allCouples.remove(item);
-      });
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -55,29 +49,7 @@ class _UploadsScreenState extends State<UploadsScreen> {
           ),
         ], //TODO: force upload
       ),
-      body: ListView.builder(
-        itemCount: _allCouples.length,
-        itemBuilder: (context, index) {
-          return Dismissible(
-            onDismissed: (direction) {
-              _removePhotos(_allCouples[index]);
-              print(_allCouples);
-            },
-            key: Key(
-              _allCouples[index],
-            ),
-            child: ListTile(
-              leading: const CircleAvatar(
-                radius: 26,
-                child: Icon(Icons.photo),
-              ),
-              title: Text(_allCouples[index]),
-              subtitle: const Text('Photo creation date'),
-              trailing: const Icon(Icons.file_upload_off),
-            ),
-          );
-        },
-      ),
+      body: PhotoCoupleList(photoCouples: _allCouples),
     );
   }
 }

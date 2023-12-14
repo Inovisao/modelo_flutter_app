@@ -1,46 +1,61 @@
-import 'package:app_skeleton/models/image.dart';
+import 'package:app_skeleton/providers/user_images.dart';
 import 'package:app_skeleton/screens/choose_image.dart';
 import 'package:app_skeleton/widgets/photo_couple_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UploadsScreen extends StatefulWidget {
+class UploadsScreen extends ConsumerStatefulWidget {
   const UploadsScreen({super.key});
 
   @override
-  State<UploadsScreen> createState() {
+  ConsumerState<UploadsScreen> createState() {
     return _UploadsScreenState();
   }
 }
 
-class _UploadsScreenState extends State<UploadsScreen> {
-  //final _items = List<String>.generate(10, (index) => 'Item ${index + 1}');
-  final List<PhotoCouple> _allCouples = [];
+class _UploadsScreenState extends ConsumerState<UploadsScreen> {
+  late Future<void> _photosFuture;
 
-  void _addPhotos() async {
-    final newPhotoCouple = await Navigator.of(context).push<PhotoCouple>(
-      MaterialPageRoute(
-        builder: (ctx) => const ImagePickerScreen(),
-      ),
-    );
-
-    if (newPhotoCouple == null) {
-      return;
-    }
-
-    setState(() {
-      _allCouples.add(newPhotoCouple);
-    });
+  @override
+  void initState() {
+    super.initState();
+    _photosFuture = ref.read(userImagesProvider.notifier).loadPhotos();
   }
+  //final _items = List<String>.generate(10, (index) => 'Item ${index + 1}');
+  // final List<PhotoCouple> _allCouples = [];
+
+  // void _addPhotos() async {
+  //   final newPhotoCouple = await Navigator.of(context).push<PhotoCouple>(
+  //     MaterialPageRoute(
+  //       builder: (ctx) => const ImagePickerScreen(),
+  //     ),
+  //   );
+
+  //   if (newPhotoCouple == null) {
+  //     return;
+  //   }
+
+  //   setState(() {
+  //     _allCouples.add(newPhotoCouple);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final userPhotoCouples = ref.watch(userImagesProvider);
 
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Text('${_allCouples.length} items in queue'),
+          Text('${userPhotoCouples.length} items in queue'),
           IconButton(
-            onPressed: _addPhotos,
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => const ImagePickerScreen(),
+                ),
+              );
+            },
             icon: const Icon(Icons.add),
           ),
           IconButton(
@@ -49,7 +64,20 @@ class _UploadsScreenState extends State<UploadsScreen> {
           ),
         ], //TODO: force upload
       ),
-      body: PhotoCoupleList(photoCouples: _allCouples),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FutureBuilder(
+          future: _photosFuture,
+          builder: (context, snapshot) =>
+              snapshot.connectionState == ConnectionState.waiting
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : PhotoCoupleList(
+                      photoCouples: userPhotoCouples,
+                    ),
+        ),
+      ),
     );
   }
 }

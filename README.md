@@ -27,7 +27,6 @@ Recomendado o uso do Visual Studio Code, para facilidade de troca de aparelho al
 - Linux;
 - Android;
 - Windows (Necessita instalacao de pacotes extras);
-- iOS (Necessita de um macOS e conta de desenvolvedor para montar um app iOS);
 
 Para mudar o dispositivo sendo usado no VSCode, abra os comandos do Flutter usando CTRL + Shift + P (Atalho padrao), e procure por `Flutter: Select Device`. 
 
@@ -48,4 +47,6 @@ As Pastas deste projeto seguem o modelo base de novos projetos do Flutter. A seg
     - `lib/`: Pasta contendo todos os codigos `*.dart` que fazem parte do projeto.
         - `main.dart`: Arquivo principal do projeto. Este eh rodado e comeca o aplicativo;
         - `screens/`: Arquivos que constroem as telas vistas pelo usuario;
-        - `widgets/`: Arquivos que contem uma ou mais funcoes ou widgets complexos, usados em um ou mais lugares, para melhor leitura do codigo.
+        - `widgets/`: Arquivos que contem uma ou mais funcoes ou widgets complexos, usados em um ou mais lugares, para melhor leitura do codigo;
+        - `models/`: Arquivos que servem como base de objetos usados pelo programa;
+        - `providers/`: Arquivos que montam e mantem a database local de imagens nao postadas online, e futuramente permitira enviar tais imagens a API;

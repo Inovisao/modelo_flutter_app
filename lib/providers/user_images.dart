@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
 
 Future<Database> _getDatabase() async {
-  bool dropTable = false;
+  // bool dropTable = false;
 
   final dbPath = await sql.getDatabasesPath();
 

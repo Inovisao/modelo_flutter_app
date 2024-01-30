@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:app_skeleton/models/image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:path_provider/path_provider.dart' as syspaths;
+import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
@@ -49,17 +49,17 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
     state = images;
   }
 
-  void addPhotos(String creationDate, File imageForm, File imagePano) async {
-    // final appDir = await syspaths.getApplicationDocumentsDirectory();
-    // final filenameForm = path.basename(imageForm.path);
-    // final filenamePano = path.basename(imagePano.path);
-    // final copiedImageForm =
-    //     await imageForm.copy('${appDir.path}/$filenameForm');
-    // final copiedImagePano =
-    //     await imagePano.copy('${appDir.path}/$filenamePano');
+  void addPhotos(String creationDate, File imageFormTemp, File imagePanoTemp) async {
+    final appDir = await syspaths.getApplicationDocumentsDirectory();
+    final filenameForm = path.basename(imageFormTemp.path);
+    final filenamePano = path.basename(imagePanoTemp.path);
+    final copiedImageForm =
+        await imageFormTemp.copy('${appDir.path}/$filenameForm');
+    final copiedImagePano =
+        await imagePanoTemp.copy('${appDir.path}/$filenamePano');
 
     final newImageEntry = PhotoCouple(
-        creationDate: creationDate, imagePano: imagePano, imageForm: imageForm);
+        creationDate: creationDate, imagePano: copiedImagePano, imageForm: copiedImageForm);
 
     final db = await _getDatabase();
     db.insert('user_images', {

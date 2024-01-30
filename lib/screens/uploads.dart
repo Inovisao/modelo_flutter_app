@@ -21,33 +21,16 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
     super.initState();
     _photosFuture = ref.read(userImagesProvider.notifier).loadPhotos();
   }
-  //final _items = List<String>.generate(10, (index) => 'Item ${index + 1}');
-  // final List<PhotoCouple> _allCouples = [];
-
-  // void _addPhotos() async {
-  //   final newPhotoCouple = await Navigator.of(context).push<PhotoCouple>(
-  //     MaterialPageRoute(
-  //       builder: (ctx) => const ImagePickerScreen(),
-  //     ),
-  //   );
-
-  //   if (newPhotoCouple == null) {
-  //     return;
-  //   }
-
-  //   setState(() {
-  //     _allCouples.add(newPhotoCouple);
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
     final userPhotoCouples = ref.watch(userImagesProvider);
+    String counter = '${userPhotoCouples.length} items in queue';
 
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Text('${userPhotoCouples.length} items in queue'),
+          Text(counter),
           IconButton(
             onPressed: () {
               Navigator.of(context).push(
@@ -59,7 +42,13 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
             icon: const Icon(Icons.add),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(
+                () {
+                  counter = '${userPhotoCouples.length} items in queue';
+                },
+              );
+            },
             icon: const Icon(Icons.upload),
           ),
         ], //TODO: force upload

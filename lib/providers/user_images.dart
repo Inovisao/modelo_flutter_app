@@ -49,7 +49,8 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
     state = images;
   }
 
-  void addPhotos(String creationDate, File imageFormTemp, File imagePanoTemp) async {
+  void addPhotos(
+      String creationDate, File imageFormTemp, File imagePanoTemp) async {
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final filenameForm = path.basename(imageFormTemp.path);
     final filenamePano = path.basename(imagePanoTemp.path);
@@ -59,7 +60,9 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
         await imagePanoTemp.copy('${appDir.path}/$filenamePano');
 
     final newImageEntry = PhotoCouple(
-        creationDate: creationDate, imagePano: copiedImagePano, imageForm: copiedImageForm);
+        creationDate: creationDate,
+        imagePano: copiedImagePano,
+        imageForm: copiedImageForm);
 
     final db = await _getDatabase();
     db.insert('user_images', {
@@ -71,6 +74,15 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
     });
 
     state = [newImageEntry, ...state];
+  }
+
+  void removePhotos(String id, File imageForm, File imagePano) async {
+    final db = await _getDatabase();
+
+    await imageForm.delete();
+    await imagePano.delete();
+
+    db.delete('user_images', where: "id = ?", whereArgs: [id]);
   }
 }
 

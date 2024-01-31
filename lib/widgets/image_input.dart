@@ -24,7 +24,6 @@ class _ImageInputState extends State<ImageInput> {
     final imagePicker = ImagePicker();
     final pickedImage = await imagePicker.pickImage(
       source: ImageSource.camera,
-      //maxWidth: 600,
     );
 
     if (pickedImage == null) {

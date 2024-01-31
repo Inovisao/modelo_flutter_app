@@ -47,12 +47,7 @@ class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
                     widget.photoCouples[index].id,
                     widget.photoCouples[index].imageForm,
                     widget.photoCouples[index].imagePano);
-
-                setState(
-                  () {
-                    widget.photoCouples.removeAt(index);
-                  },
-                );
+                widget.photoCouples.removeAt(index);
               },
             );
             ScaffoldMessenger.of(context).showSnackBar(

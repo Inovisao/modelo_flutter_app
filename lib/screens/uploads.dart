@@ -29,9 +29,10 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text(counter),
         actions: [
-          Text(counter),
           IconButton(
+            icon: const Icon(Icons.add_photo_alternate),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -39,9 +40,9 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
                 ),
               );
             },
-            icon: const Icon(Icons.add),
           ),
           IconButton(
+            icon: const Icon(Icons.upload),
             onPressed: () {
               setState(
                 () {
@@ -49,7 +50,6 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
                 },
               );
             },
-            icon: const Icon(Icons.upload),
           ),
         ], //TODO: force upload
       ),

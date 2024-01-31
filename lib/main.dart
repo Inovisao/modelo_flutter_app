@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'App Skeleton',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+          seedColor: Colors.pink,
           brightness: Brightness.dark,
         ),
       ),

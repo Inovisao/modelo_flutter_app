@@ -53,10 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 width: 500,
                 child: const Image(
-                  image: NetworkImage(
-                    'https://pbs.twimg.com/media/F7GAY2ZWgAACQbX.jpg', //TODO: obtain generic image for app/INOVISAO logo
-                  ),
-                ),
+                    image: AssetImage('assets/images/logo-alta-resolucao.png')),
               ),
               ElevatedButton(
                 onPressed: _onLoginTap,

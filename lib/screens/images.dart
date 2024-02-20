@@ -14,18 +14,19 @@ class PhotoScreen extends StatefulWidget {
 class _PhotoScreenState extends State<PhotoScreen> {
   @override
   Widget build(BuildContext context) {
-
     void _onLogoutTap() async {
-    Navigator.of(context).pop();
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => const AuthScreen(),
-      ),
-    );
-  }
+      Navigator.of(context).pop();
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const AuthScreen(),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
+        leading: const Image(
+            image: AssetImage('assets/images/logo-alta-resolucao.png')),
         title: const Text('Picture Queue'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [

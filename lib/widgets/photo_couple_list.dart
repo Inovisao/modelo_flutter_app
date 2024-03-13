@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class PhotoCoupleList extends ConsumerStatefulWidget {
   const PhotoCoupleList({super.key, required this.photoCouples});
 
-  final List<PhotoCouple> photoCouples;
+  final List<Photo> photoCouples;
 
   @override
   ConsumerState<PhotoCoupleList> createState() => _PhotoCoupleListState();
@@ -28,10 +28,10 @@ class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
       );
     }
 
-    void _removePhotos(String id, File imageForm, File imagePano) {
+    void _removePhotos(String id, File image) {
       ref
           .read(userImagesProvider.notifier)
-          .removePhotos(id, imageForm, imagePano);
+          .removePhotos(id, image);
     }
 
     return ListView.builder(
@@ -45,8 +45,7 @@ class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
               () {
                 _removePhotos(
                     widget.photoCouples[index].id,
-                    widget.photoCouples[index].imageForm,
-                    widget.photoCouples[index].imagePano);
+                    widget.photoCouples[index].image);
                 widget.photoCouples.removeAt(index);
               },
             );
@@ -59,7 +58,7 @@ class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
           child: ListTile(
             leading: CircleAvatar(
               radius: 26,
-              backgroundImage: FileImage(widget.photoCouples[index].imagePano),
+              backgroundImage: FileImage(widget.photoCouples[index].image),
             ),
             title: Text(widget.photoCouples[index].id),
             subtitle:

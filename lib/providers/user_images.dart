@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
 
 Future<Database> _getDatabase() async {
-  bool dropTable = true;
+  // bool dropTable = true;
 
   final dbPath = await sql.getDatabasesPath();
 
@@ -15,20 +15,20 @@ Future<Database> _getDatabase() async {
     path.join(dbPath, 'images.db'),
     onCreate: (db, version) {
       return db.execute(
-        'CREATE TABLE user_images(id TEXT PRIMARY KEY, user_id TEXT, creation_date TEXT NOT NULL, image_Pano_Url TEXT NOT NULL, uploaded INTEGER DEFAULT 0);',
+        'CREATE TABLE user_images(id TEXT PRIMARY KEY, user_id TEXT, creation_date TEXT NOT NULL, image_url TEXT NOT NULL, uploaded INTEGER DEFAULT 0);',
       );
     },
     version: 1,
   );
 
-  if(dropTable){
-    await db.delete('user_images');
-  }
+  // if(dropTable){
+  //   await db.delete('user_images');
+  // }
 
   return db;
 }
 
-class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
+class UserImagesNotifier extends StateNotifier<List<Photo>> {
   UserImagesNotifier() : super(const []);
 
   Future<void> loadPhotos() async {
@@ -36,11 +36,11 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
     final data = await db.query('user_images');
     final images = data
         .map(
-          (row) => PhotoCouple(
+          (row) => Photo(
             id: row['id'] as String,
+            userId: row['user_id'] as String,
             creationDate: row['creation_date'] as String,
-            imageForm: File(row['image_Form_Url'] as String),
-            imagePano: File(row['image_Pano_Url'] as String),
+            image: File(row['image_url'] as String),
             isUploaded: row['uploaded'] as int,
           ),
         )
@@ -50,43 +50,39 @@ class UserImagesNotifier extends StateNotifier<List<PhotoCouple>> {
   }
 
   void addPhotos(
-      String creationDate, File imageFormTemp, File imagePanoTemp) async {
+      String creationDate, File imageTemp, String userId) async {
     final appDir = await syspaths.getApplicationDocumentsDirectory();
-    final filenameForm = path.basename(imageFormTemp.path);
-    final filenamePano = path.basename(imagePanoTemp.path);
-    final copiedImageForm =
-        await imageFormTemp.copy('${appDir.path}/$filenameForm');
-    final copiedImagePano =
-        await imagePanoTemp.copy('${appDir.path}/$filenamePano');
+    final filename = path.basename(imageTemp.path);
+    final copiedImage =
+        await imageTemp.copy('${appDir.path}/$filename');
 
-    final newImageEntry = PhotoCouple(
+    final newImageEntry = Photo(
         creationDate: creationDate,
-        imagePano: copiedImagePano,
-        imageForm: copiedImageForm);
+        image: copiedImage,
+        userId: userId);
 
     final db = await _getDatabase();
     db.insert('user_images', {
       'id': newImageEntry.id,
+      'user_id': newImageEntry.userId,
       'creation_date': newImageEntry.creationDate,
-      'image_Form_Url': newImageEntry.imageForm.path,
-      'image_Pano_Url': newImageEntry.imagePano.path,
+      'image_url': newImageEntry.image.path,
       'uploaded': newImageEntry.isUploaded,
     });
 
     state = [newImageEntry, ...state];
   }
 
-  void removePhotos(String id, File imageForm, File imagePano) async {
+  void removePhotos(String id, File image) async {
     final db = await _getDatabase();
 
-    await imageForm.delete();
-    await imagePano.delete();
+    await image.delete();
 
     db.delete('user_images', where: "id = ?", whereArgs: [id]);
   }
 }
 
 final userImagesProvider =
-    StateNotifierProvider<UserImagesNotifier, List<PhotoCouple>>(
+    StateNotifierProvider<UserImagesNotifier, List<Photo>>(
   (ref) => UserImagesNotifier(),
 );

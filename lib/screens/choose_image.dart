@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_skeleton/models/image.dart';
 import 'package:app_skeleton/providers/user_images.dart';
 import 'package:app_skeleton/widgets/date_replacer.dart';
 import 'package:app_skeleton/widgets/image_input.dart';
@@ -17,10 +18,11 @@ class ImagePickerScreen extends ConsumerStatefulWidget {
 
 class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
   File? _selectedImagePano;
-  File? _selectedImageForm;
+  // File? _selectedImageForm;
 
   void _savePhotos() {
-    if (_selectedImageForm == null || _selectedImagePano == null) {
+    // if (_selectedImageForm == null || _selectedImagePano == null) {
+    if (_selectedImagePano == null) {
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -31,7 +33,7 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const Text('Please choose two images'),
+                  const Text('Please choose an image'),
                   const SizedBox(
                     height: 15,
                   ),
@@ -51,8 +53,8 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
 
     ref.read(userImagesProvider.notifier).addPhotos(
           creationDate,
-          _selectedImageForm!,
           _selectedImagePano!,
+          uuid.v4(),
         );
 
     Navigator.of(context).pop();
@@ -80,15 +82,15 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
                   },
                   photoContainerTitle: 'photo pano',
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ImageInput(
-                  onPickImage: (image) {
-                    _selectedImageForm = image;
-                  },
-                  photoContainerTitle: 'photo Form',
-                ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // ImageInput(
+                //   onPickImage: (image) {
+                //     _selectedImageForm = image;
+                //   },
+                //   photoContainerTitle: 'photo Form',
+                // ),
                 const SizedBox(
                   height: 10,
                 ),

@@ -3,19 +3,19 @@ import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
 
-class PhotoCouple {
-  PhotoCouple(
+class Photo {
+  Photo(
       {required this.creationDate,
-      required this.imagePano,
-      required this.imageForm,
+      required this.image,
+      required this.userId,
       String? id,
       int? isUploaded})
       : id = id ?? uuid.v4(),
         isUploaded = isUploaded ?? 0;
 
   final String id;
+  final String userId;
   final String creationDate;
-  final File imagePano;
-  final File imageForm;
+  final File image;
   final int isUploaded;
 }

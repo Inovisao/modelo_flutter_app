@@ -80,15 +80,15 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
                   },
                   photoContainerTitle: 'photo pano',
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ImageInput(
-                  onPickImage: (image) {
-                    _selectedImageForm = image;
-                  },
-                  photoContainerTitle: 'photo Form',
-                ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // ImageInput(
+                //   onPickImage: (image) {
+                //     _selectedImageForm = image;
+                //   },
+                //   photoContainerTitle: 'photo Form',
+                // ),
                 const SizedBox(
                   height: 10,
                 ),

@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
 
 Future<Database> _getDatabase() async {
-  // bool dropTable = false;
+  bool dropTable = true;
 
   final dbPath = await sql.getDatabasesPath();
 
@@ -15,15 +15,15 @@ Future<Database> _getDatabase() async {
     path.join(dbPath, 'images.db'),
     onCreate: (db, version) {
       return db.execute(
-        'CREATE TABLE user_images(id TEXT PRIMARY KEY, creation_date TEXT NOT NULL, image_Form_Url TEXT NOT NULL, image_Pano_Url TEXT NOT NULL, uploaded INTEGER DEFAULT 0);',
+        'CREATE TABLE user_images(id TEXT PRIMARY KEY, user_id TEXT, creation_date TEXT NOT NULL, image_Pano_Url TEXT NOT NULL, uploaded INTEGER DEFAULT 0);',
       );
     },
     version: 1,
   );
 
-  // if(dropTable){
-  //   await db.delete('user_images');
-  // }
+  if(dropTable){
+    await db.delete('user_images');
+  }
 
   return db;
 }

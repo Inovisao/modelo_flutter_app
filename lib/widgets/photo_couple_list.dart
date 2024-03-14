@@ -15,6 +15,10 @@ class PhotoCoupleList extends ConsumerStatefulWidget {
 }
 
 class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
+  void _removePhotos(String id, File image) {
+    ref.read(userImagesProvider.notifier).removePhotos(id, image);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.photoCouples.isEmpty) {
@@ -28,12 +32,6 @@ class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
       );
     }
 
-    void _removePhotos(String id, File image) {
-      ref
-          .read(userImagesProvider.notifier)
-          .removePhotos(id, image);
-    }
-
     return ListView.builder(
       itemCount: widget.photoCouples.length,
       itemBuilder: (context, index) {
@@ -43,8 +41,7 @@ class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
           onDismissed: (direction) {
             setState(
               () {
-                _removePhotos(
-                    widget.photoCouples[index].id,
+                _removePhotos(widget.photoCouples[index].id,
                     widget.photoCouples[index].image);
                 widget.photoCouples.removeAt(index);
               },

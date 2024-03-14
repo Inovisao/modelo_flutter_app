@@ -5,6 +5,14 @@
 
 Projeto de aplicativo utilizando framework Flutter. Atualmente baseando-se nas condicoes do projeto de Pano de Batida.
 
+## Como usar
+
+- Faca Login usando uma conta existente da Google;
+- Pressione o icone de imagem para entrar na pagina de tirar fotos;
+- Tire uma foto, ou selecione uma foto ja existente;
+- Pressione o botao Upload, a imagem agora estara salva temporariamente no seu dispositivo;
+- Pressione o icone de upload no canto superior direito, as imagens previamente tiradas serao enviadas a API (em progresso)
+
 ## Setup
 
 Para rodar o aplicativo, por favor siga as instrucoes para [instalar o Flutter e suas dependencias](https://docs.flutter.dev/get-started/install). Quaisquer duvidas sobre o processo, seja no Windows ou no Ubuntu, por favor entrar em contato com os autores do aplicativo.

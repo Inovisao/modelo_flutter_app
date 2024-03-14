@@ -1,5 +1,3 @@
-import 'package:app_skeleton/screens/images.dart';
-
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,15 +38,6 @@ class _AuthScreenState extends State<AuthScreen> {
     if (FirebaseAuth.instance.currentUser==null) {
       return; 
     }
-  }
-
-  void _onRegisterTap() async {
-    Navigator.of(context).pop();
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => const PhotoScreen(),
-      ),
-    );
   }
 
   @override

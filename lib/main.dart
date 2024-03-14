@@ -37,8 +37,6 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      // TODO: change home value for Streambuilder when firebase is running
-      // TODO: auth or choose image screen dependning if the use r is logged in or not
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (ctx, snapshot) {

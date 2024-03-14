@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+// Tela inicial contendo barra de navegacao da tela de imagens
 class PhotoScreen extends StatefulWidget {
   const PhotoScreen({super.key});
 

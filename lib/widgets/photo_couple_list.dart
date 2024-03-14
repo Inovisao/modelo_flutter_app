@@ -6,25 +6,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PhotoCoupleList extends ConsumerStatefulWidget {
-  const PhotoCoupleList({super.key, required this.photoCouples});
+  const PhotoCoupleList({super.key, required this.photo});
 
-  final List<Photo> photoCouples;
+  final List<Photo> photo;
 
   @override
   ConsumerState<PhotoCoupleList> createState() => _PhotoCoupleListState();
 }
 
 class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
-  void _removePhotos(String id, File image) {
+  void _removePhoto(String id, File image) {
     ref.read(userImagesProvider.notifier).removePhotos(id, image);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.photoCouples.isEmpty) {
+    if (widget.photo.isEmpty) {
       return Center(
         child: Text(
-          'No photos added yet',
+          'No photo added yet',
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
@@ -32,18 +32,20 @@ class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
       );
     }
 
+    // Creates list of images using the image provider
     return ListView.builder(
-      itemCount: widget.photoCouples.length,
+      itemCount: widget.photo.length,
       itemBuilder: (context, index) {
+        // Makes image items dismissable with a swipe
         return Dismissible(
-          key: Key(widget.photoCouples[index].id),
+          key: Key(widget.photo[index].id),
           background: Container(color: Colors.red),
           onDismissed: (direction) {
             setState(
               () {
-                _removePhotos(widget.photoCouples[index].id,
-                    widget.photoCouples[index].image);
-                widget.photoCouples.removeAt(index);
+                _removePhoto(widget.photo[index].id,
+                    widget.photo[index].image);
+                widget.photo.removeAt(index);
               },
             );
             ScaffoldMessenger.of(context).showSnackBar(
@@ -52,15 +54,22 @@ class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
               ),
             );
           },
+
+          // Creates image item
           child: ListTile(
+            // Leading preview image
             leading: CircleAvatar(
               radius: 26,
-              backgroundImage: FileImage(widget.photoCouples[index].image),
+              backgroundImage: FileImage(widget.photo[index].image),
             ),
-            title: Text(widget.photoCouples[index].id),
+            // Name of image
+            title: Text(widget.photo[index].id),
+            // When was the photo taken
             subtitle:
-                Text('Sent at ${widget.photoCouples[index].creationDate}'),
-            trailing: widget.photoCouples[index].isUploaded == 0
+                Text('Sent at ${widget.photo[index].creationDate}'),
+            // If the image was uploaded yet, pending
+            // TODO: check what to put here, upload status or other info
+            trailing: widget.photo[index].isUploaded == 0
                 ? const Icon(Icons.file_upload_off)
                 : const Icon(Icons.file_upload),
           ),

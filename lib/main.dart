@@ -16,7 +16,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
- // start of main app and include it within the provider
+  // start of main app and include it within the provider
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -30,13 +30,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'App Skeleton',
+      // Estilizacao do aplicativo base
+      title: 'Inophotos',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.pink,
           brightness: Brightness.dark,
         ),
       ),
+      
+      // Streambuilder para ouvir FirebaseAuth.instance para
+      // observar se ha usuario logado ou nao, e agir de acordo
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (ctx, snapshot) {

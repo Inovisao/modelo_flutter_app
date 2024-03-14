@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Tela de espera para carregamento
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 

@@ -11,7 +11,8 @@ Projeto de aplicativo utilizando framework Flutter. Atualmente baseando-se nas c
 - Pressione o icone de imagem para entrar na pagina de tirar fotos;
 - Tire uma foto, ou selecione uma foto ja existente;
 - Pressione o botao Upload, a imagem agora estara salva temporariamente no seu dispositivo;
-- Pressione o icone de upload no canto superior direito, as imagens previamente tiradas serao enviadas a API (em progresso)
+- Pressione o icone de upload, as imagens previamente tiradas serao enviadas a API (em progresso);
+- Caso queira mudar de conta, pressione o icone de Logout no topo superior direito, e voce voltara a pagina de login;
 
 ## Setup
 
@@ -29,12 +30,13 @@ Independente do metodo a ser usado, clone o projeto, e, a partir da pasta base d
 flutter clean
 flutter pub get
 ```
+- - Sistema de login atualmente esta usando FirebaseAuth e Google Social Login, linkados a uma conta criada por Fabio Prestes. Por favor falar com Fabio para mais informacoes em como configurar essa parte.
+
 3. O projeto esta pronto para ser rodado! Abra o arquivo `lib/main.dart` e rode-o fora do modo debug (CTRL + F5), usando o dispositivo desejado. 
 
 Recomendado o uso do Visual Studio Code, para facilidade de troca de aparelho alvo. Atualmente temos os seguintes aparelhos compativeis:
 - Linux;
 - Android;
-- Windows (Necessita instalacao de pacotes extras);
 
 Para mudar o dispositivo sendo usado no VSCode, abra os comandos do Flutter usando CTRL + Shift + P (Atalho padrao), e procure por `Flutter: Select Device`. 
 

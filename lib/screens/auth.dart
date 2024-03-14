@@ -16,7 +16,8 @@ class _AuthScreenState extends State<AuthScreen> {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -35,8 +36,8 @@ class _AuthScreenState extends State<AuthScreen> {
     // on main.dart, in the stream for authState
 
     // If user is not logged in, stop the function.
-    if (FirebaseAuth.instance.currentUser==null) {
-      return; 
+    if (FirebaseAuth.instance.currentUser == null) {
+      return;
     }
   }
 

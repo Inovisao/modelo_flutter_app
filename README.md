@@ -60,3 +60,5 @@ As Pastas deste projeto seguem o modelo base de novos projetos do Flutter. A seg
         - `widgets/`: Arquivos que contem uma ou mais funcoes ou widgets complexos, usados em um ou mais lugares, para melhor leitura do codigo;
         - `models/`: Arquivos que servem como base de objetos usados pelo programa;
         - `providers/`: Arquivos que montam e mantem a database local de imagens nao postadas online, e futuramente permitira enviar tais imagens a API;
+
+.

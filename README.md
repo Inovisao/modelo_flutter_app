@@ -11,7 +11,7 @@ Para rodar o aplicativo, por favor siga as instrucoes para [instalar o Flutter e
 
 Alem do Flutter, tambem sera necessario a instalacao do Android Studio (parte das dependencias instaladas para o Flutter). Este eh necessario para:
 1. Criar um emulador de Android;
-2. Permitir que aparelhos Android fisicos possam ser usados como aparelho destino.
+2. Permitir que aparelhos Android fisicos possam ser usados como aparelho destino;
 
 Independente do metodo a ser usado, clone o projeto, e, a partir da pasta base do repositorio, siga as instrucoes a seguir:
 

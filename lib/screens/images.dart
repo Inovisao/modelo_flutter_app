@@ -1,6 +1,9 @@
-import 'package:app_skeleton/screens/auth.dart';
 import 'package:app_skeleton/screens/uploads.dart';
+
 import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class PhotoScreen extends StatefulWidget {
   const PhotoScreen({super.key});
@@ -12,17 +15,15 @@ class PhotoScreen extends StatefulWidget {
 }
 
 class _PhotoScreenState extends State<PhotoScreen> {
+  void _onLogoutTap() async {
+    // Disconnect from Google services first
+    await GoogleSignIn().disconnect();
+    // Then disconnect from FirebaseAuth
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
-    void _onLogoutTap() async {
-      Navigator.of(context).pop();
-      await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (ctx) => const AuthScreen(),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         leading: const Image(

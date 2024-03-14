@@ -2,6 +2,9 @@ import 'package:app_skeleton/screens/images.dart';
 
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
@@ -10,17 +13,33 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  //TODO: set variables for account validation and login
+  Future<UserCredential> _signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  //TODO: create submit method for Firebase storage of information, and error handling
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the user credential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 
   void _onLoginTap() async {
-    Navigator.of(context).pop();
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => const PhotoScreen(),
-      ),
-    );
+    // First, user authenticates using Google Account
+    _signInWithGoogle();
+    // The check to see if someone is authenticated is
+    // on main.dart, in the stream for authState
+
+    // If user is not logged in, stop the function.
+    if (FirebaseAuth.instance.currentUser==null) {
+      return; 
+    }
   }
 
   void _onRegisterTap() async {
@@ -61,10 +80,6 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               const SizedBox(
                 height: 10,
-              ),
-              ElevatedButton(
-                onPressed: _onRegisterTap,
-                child: const Text('Criar com Google'),
               ),
             ],
           ),

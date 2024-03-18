@@ -17,6 +17,7 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
   late Future<void> _photosFuture;
 
   @override
+  // Listen to provider to check for existing photos, and load them in order of upload
   void initState() {
     super.initState();
     _photosFuture = ref.read(userImagesProvider.notifier).loadPhotos();
@@ -24,6 +25,7 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Keep watch on any new photos being uploaded
     final userPhotoCouples = ref.watch(userImagesProvider);
     String counter = '${userPhotoCouples.length} items in queue';
 
@@ -31,6 +33,7 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
       appBar: AppBar(
         title: Text(counter),
         actions: [
+          // Button to add new images
           IconButton(
             icon: const Icon(Icons.add_photo_alternate),
             onPressed: () {
@@ -41,6 +44,9 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
               );
             },
           ),
+
+          // Button to upload currently saved images to API
+           //TODO: force upload
           IconButton(
             icon: const Icon(Icons.upload),
             onPressed: () {
@@ -51,8 +57,10 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
               );
             },
           ),
-        ], //TODO: force upload
+        ],
       ),
+
+      // Loading indicator
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder(
@@ -63,7 +71,7 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
                       child: CircularProgressIndicator(),
                     )
                   : PhotoCoupleList(
-                      photoCouples: userPhotoCouples,
+                      photo: userPhotoCouples,
                     ),
         ),
       ),

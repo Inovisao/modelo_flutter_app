@@ -17,12 +17,10 @@ class ImagePickerScreen extends ConsumerStatefulWidget {
 }
 
 class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
-  File? _selectedImagePano;
-  // File? _selectedImageForm;
+  File? _selectedImage;
 
   void _savePhotos() {
-    // if (_selectedImageForm == null || _selectedImagePano == null) {
-    if (_selectedImagePano == null) {
+    if (_selectedImage == null) {
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -51,9 +49,9 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
 
     final creationDate = dateReplaceAll(DateTime.now().toString());
 
-    ref.read(userImagesProvider.notifier).addPhotos(
+    ref.read(userImagesProvider.notifier).addPhoto(
           creationDate,
-          _selectedImagePano!,
+          _selectedImage!,
           uuid.v4(),
         );
 
@@ -64,7 +62,7 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add new photos'),
+        title: const Text('Add new photo'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
@@ -78,19 +76,10 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
                 ),
                 ImageInput(
                   onPickImage: (image) {
-                    _selectedImagePano = image;
+                    _selectedImage = image;
                   },
-                  photoContainerTitle: 'photo pano',
+                  photoContainerTitle: 'photo',
                 ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                // ImageInput(
-                //   onPickImage: (image) {
-                //     _selectedImageForm = image;
-                //   },
-                //   photoContainerTitle: 'photo Form',
-                // ),
                 const SizedBox(
                   height: 10,
                 ),

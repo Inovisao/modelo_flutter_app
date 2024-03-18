@@ -5,13 +5,22 @@
 
 Projeto de aplicativo utilizando framework Flutter. Atualmente baseando-se nas condicoes do projeto de Pano de Batida.
 
+## Como usar
+
+- Faca Login usando uma conta existente da Google;
+- Pressione o icone de imagem para entrar na pagina de tirar fotos;
+- Tire uma foto, ou selecione uma foto ja existente;
+- Pressione o botao Upload, a imagem agora estara salva temporariamente no seu dispositivo;
+- Pressione o icone de upload, as imagens previamente tiradas serao enviadas a API (em progresso);
+- Caso queira mudar de conta, pressione o icone de Logout no topo superior direito, e voce voltara a pagina de login;
+
 ## Setup
 
 Para rodar o aplicativo, por favor siga as instrucoes para [instalar o Flutter e suas dependencias](https://docs.flutter.dev/get-started/install). Quaisquer duvidas sobre o processo, seja no Windows ou no Ubuntu, por favor entrar em contato com os autores do aplicativo.
 
 Alem do Flutter, tambem sera necessario a instalacao do Android Studio (parte das dependencias instaladas para o Flutter). Este eh necessario para:
 1. Criar um emulador de Android;
-2. Permitir que aparelhos Android fisicos possam ser usados como aparelho destino.
+2. Permitir que aparelhos Android fisicos possam ser usados como aparelho destino;
 
 Independente do metodo a ser usado, clone o projeto, e, a partir da pasta base do repositorio, siga as instrucoes a seguir:
 
@@ -21,12 +30,13 @@ Independente do metodo a ser usado, clone o projeto, e, a partir da pasta base d
 flutter clean
 flutter pub get
 ```
+- - Sistema de login atualmente esta usando FirebaseAuth e Google Social Login, linkados a uma conta criada por Fabio Prestes. Por favor falar com Fabio para mais informacoes em como configurar essa parte.
+
 3. O projeto esta pronto para ser rodado! Abra o arquivo `lib/main.dart` e rode-o fora do modo debug (CTRL + F5), usando o dispositivo desejado. 
 
 Recomendado o uso do Visual Studio Code, para facilidade de troca de aparelho alvo. Atualmente temos os seguintes aparelhos compativeis:
 - Linux;
 - Android;
-- Windows (Necessita instalacao de pacotes extras);
 
 Para mudar o dispositivo sendo usado no VSCode, abra os comandos do Flutter usando CTRL + Shift + P (Atalho padrao), e procure por `Flutter: Select Device`. 
 
@@ -50,3 +60,4 @@ As Pastas deste projeto seguem o modelo base de novos projetos do Flutter. A seg
         - `widgets/`: Arquivos que contem uma ou mais funcoes ou widgets complexos, usados em um ou mais lugares, para melhor leitura do codigo;
         - `models/`: Arquivos que servem como base de objetos usados pelo programa;
         - `providers/`: Arquivos que montam e mantem a database local de imagens nao postadas online, e futuramente permitira enviar tais imagens a API;
+        

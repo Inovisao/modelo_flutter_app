@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1086776185649",
+    "project_id": "pdb-photo-project",
+    "storage_bucket": "pdb-photo-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086776185649:android:fa03ba348f12fe5f4bd610",
+        "android_client_info": {
+          "package_name": "com.example.app_skeleton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1086776185649-79lfa0tkq8lllrfg00u9g4j31ae7d1qf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app_skeleton",
+            "certificate_hash": "bc037e5ecc9a5755cae9d59b6c35e74bf02e02ab"
+          }
+        },
+        {
+          "client_id": "1086776185649-v5i06j4hk6msem61nufu68ed3ekh1opv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxAlqiSRnKXGkqL-WMpwHanqxxxGjIkFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1086776185649-v5i06j4hk6msem61nufu68ed3ekh1opv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1086776185649-10mevt9vc71773lno3515curitb7sj84.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appSkeleton.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

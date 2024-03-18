@@ -1,3 +1,4 @@
+import 'package:app_skeleton/widgets/logos.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,17 +54,16 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 30,
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                ),
-                width: 500,
-                child: const Image(
-                    image: AssetImage('assets/images/logo-alta-resolucao.png')),
-              ),
+              const LogosContainers(
+                  imageLeft:
+                      Image(image: AssetImage('assets/images/inovisao.png')),
+                  imageRight:
+                      Image(image: AssetImage('assets/images/k_com_text.png'))),
+              const LogosContainers(
+                  imageLeft:
+                      Image(image: AssetImage('assets/images/ucdb.png')),
+                  imageRight:
+                      Image(image: AssetImage('assets/images/fundacao_ms.png'))),
               ElevatedButton(
                 onPressed: _onLoginTap,
                 child: const Text('Login com Google'),

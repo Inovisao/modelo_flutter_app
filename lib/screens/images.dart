@@ -28,7 +28,7 @@ class _PhotoScreenState extends State<PhotoScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const Image(
-            image: AssetImage('assets/images/logo-alta-resolucao.png')),
+            image: AssetImage('assets/images/inovisao.png')),
         title: const Text('Picture Queue'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [

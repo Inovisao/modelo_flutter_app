@@ -59,11 +59,16 @@ class _AuthScreenState extends State<AuthScreen> {
                       Image(image: AssetImage('assets/images/inovisao.png')),
                   imageRight:
                       Image(image: AssetImage('assets/images/k_com_text.png'))),
+              const Padding(
+                padding: EdgeInsets.all(5),
+              ),
               const LogosContainers(
-                  imageLeft:
-                      Image(image: AssetImage('assets/images/ucdb.png')),
-                  imageRight:
-                      Image(image: AssetImage('assets/images/fundacao_ms.png'))),
+                  imageLeft: Image(image: AssetImage('assets/images/ucdb.png')),
+                  imageRight: Image(
+                      image: AssetImage('assets/images/fundacao_ms.png'))),
+              const Padding(
+                padding: EdgeInsets.all(5),
+              ),
               ElevatedButton(
                 onPressed: _onLoginTap,
                 child: const Text('Login com Google'),

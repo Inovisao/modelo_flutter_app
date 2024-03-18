@@ -9,32 +9,40 @@ class LogosContainers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(
-              top: 30,
-              bottom: 20,
-              left: 20,
-              right: 20,
+    // Container that holds both logos for this row
+    return Container(
+      // Decoration to create colored border around the logo for visibility
+      decoration: BoxDecoration(
+        color: Colors.pink,
+        borderRadius: BorderRadius.circular(50),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(
+                top: 30,
+                bottom: 20,
+                left: 20,
+                right: 20,
+              ),
+              child: imageLeft,
             ),
-            child: imageLeft,
           ),
-        ),
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(
-              top: 30,
-              bottom: 20,
-              left: 20,
-              right: 20,
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(
+                top: 30,
+                bottom: 20,
+                left: 20,
+                right: 20,
+              ),
+              child: imageRight,
             ),
-            child: imageRight,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

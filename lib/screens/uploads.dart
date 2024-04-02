@@ -1,6 +1,7 @@
 import 'package:app_skeleton/providers/user_images.dart';
 import 'package:app_skeleton/screens/choose_image.dart';
 import 'package:app_skeleton/widgets/photo_couple_list.dart';
+import 'package:app_skeleton/widgets/request_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,8 +27,8 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
   @override
   Widget build(BuildContext context) {
     // Keep watch on any new photos being uploaded
-    final userPhotoCouples = ref.watch(userImagesProvider);
-    String counter = '${userPhotoCouples.length} items in queue';
+    final userPhotos = ref.watch(userImagesProvider);
+    String counter = '${userPhotos.length} items in queue';
 
     return Scaffold(
       appBar: AppBar(
@@ -50,9 +51,10 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
           IconButton(
             icon: const Icon(Icons.upload),
             onPressed: () {
+              uploadObjectList(userPhotos);
               setState(
                 () {
-                  counter = '${userPhotoCouples.length} items in queue';
+                  counter = '${userPhotos.length} items in queue';
                 },
               );
             },
@@ -71,7 +73,7 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
                       child: CircularProgressIndicator(),
                     )
                   : PhotoCoupleList(
-                      photo: userPhotoCouples,
+                      photo: userPhotos,
                     ),
         ),
       ),

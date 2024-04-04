@@ -26,7 +26,7 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Keep watch on any new photos being uploaded
+    final photoNotifier = ref.watch(userImagesProvider.notifier);
     final userPhotos = ref.watch(userImagesProvider);
     String counter = '${userPhotos.length} items in queue';
 
@@ -45,16 +45,15 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
               );
             },
           ),
-
-          // Button to upload currently saved images to API
-           //TODO: force upload
           IconButton(
             icon: const Icon(Icons.upload),
             onPressed: () {
-              uploadObjectList(userPhotos);
               setState(
                 () {
-                  counter = '${userPhotos.length} items in queue';
+                  uploadObjectList(
+                    userPhotos,
+                    photoNotifier,
+                  );
                 },
               );
             },
@@ -72,7 +71,7 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : PhotoCoupleList(
+                  : PhotoList(
                       photo: userPhotos,
                     ),
         ),

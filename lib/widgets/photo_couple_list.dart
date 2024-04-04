@@ -5,16 +5,16 @@ import 'package:app_skeleton/providers/user_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PhotoCoupleList extends ConsumerStatefulWidget {
-  const PhotoCoupleList({super.key, required this.photo});
+class PhotoList extends ConsumerStatefulWidget {
+  const PhotoList({super.key, required this.photo});
 
   final List<Photo> photo;
 
   @override
-  ConsumerState<PhotoCoupleList> createState() => _PhotoCoupleListState();
+  ConsumerState<PhotoList> createState() => _PhotoListState();
 }
 
-class _PhotoCoupleListState extends ConsumerState<PhotoCoupleList> {
+class _PhotoListState extends ConsumerState<PhotoList> {
   void _removePhoto(String id, File image) {
     ref.read(userImagesProvider.notifier).removePhotos(id, image);
   }

@@ -1,10 +1,11 @@
 import 'dart:developer';
+import 'package:app_skeleton/providers/user_images.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:app_skeleton/models/image.dart';
 
 // Based on what Roberto Neto did
-Future<void> uploadObjectList(List<Photo> photos) async {
+Future<void> uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) async {
   Uri uri = Uri.parse('http://172.28.188.65:8000/images/');
   http.MultipartRequest request = http.MultipartRequest('POST', uri);
   var headers = {
@@ -33,10 +34,13 @@ Future<void> uploadObjectList(List<Photo> photos) async {
     request.fields['fields'] = fields.toString();
 
     // preparing to send the actual request
-    var response = await http.Response.fromStream(await request.send().timeout(const Duration(seconds: 20)));
+    var response = await http.Response.fromStream(await request.send().timeout(const Duration(seconds: 10)));
 
     if (response.statusCode == 201){
       log('Request sent successfully');
+      for (Photo photo in photos) {
+        notifier.removePhotos(photo.id, photo.image);
+      }
     } else {
       log('Failed to send request. Status code: ${response.statusCode}');
     }

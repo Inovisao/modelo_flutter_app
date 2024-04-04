@@ -88,6 +88,8 @@ class UserImagesNotifier extends StateNotifier<List<Photo>> {
     await image.delete();
 
     db.delete('user_images', where: "id = ?", whereArgs: [id]);
+
+    state = [];
   }
 }
 

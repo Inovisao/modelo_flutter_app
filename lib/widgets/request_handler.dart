@@ -8,6 +8,7 @@ import 'package:app_skeleton/models/image.dart';
 
 Future<String> imageToBase64(File imageFile) async {
   List<int> imageBytes = await imageFile.readAsBytes();
+  log(imageBytes.length.toString());
   String base64Image = base64Encode(imageBytes);
   return base64Image;
 }
@@ -27,7 +28,7 @@ Future<void> uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) a
   if (photos.isNotEmpty) {
     for (Photo photo in photos) {
       // Start reading image file and covert it to base64
-      final base64Image = imageToBase64(photo.image);
+      final base64Image = await imageToBase64(photo.image);
 
       fields.add({
         "user_id": photo.userId,
@@ -35,12 +36,7 @@ Future<void> uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) a
         "base64_data": base64Image
       });   
     }
-
-    log(fields.toString());
-
-    request.body = jsonEncode(fields.toString());
-
-    log(request.body);
+    request.body = json.encode(fields);
 
     // preparing to send the actual request
     var response = await http.Response.fromStream(await request.send().timeout(const Duration(seconds: 10)));

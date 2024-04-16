@@ -33,7 +33,7 @@ Future<void> uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) a
       fields.add({
         "user_id": photo.userId,
         "created_at": photo.creationDate,
-        "base64_data": base64Image
+        "image": base64Image
       });   
     }
     request.body = json.encode(fields);

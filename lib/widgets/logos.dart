@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app_skeleton/widgets/theme_color_switch.dart';
 
 class LogosContainers extends StatelessWidget {
   const LogosContainers(
@@ -12,10 +13,7 @@ class LogosContainers extends StatelessWidget {
     // Container that holds both logos for this row
     return Container(
       // Decoration to create colored border around the logo for visibility
-      decoration: BoxDecoration(
-        color: Colors.pink,
-        borderRadius: BorderRadius.circular(50),
-      ),
+      decoration: themeColorWhite(BorderRadius.circular(50), context),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

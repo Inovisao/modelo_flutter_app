@@ -30,7 +30,7 @@ class _PhotoScreenState extends State<PhotoScreen> {
         leading: const Image(
             image: AssetImage('assets/images/inovisao.png')),
         title: const Text('Picture Queue'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         actions: [
           IconButton(
             onPressed: _onLogoutTap,

@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'Inophotos',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.pink,
+          seedColor: const Color.fromARGB(255, 14, 13, 48), //Colors.pink,
           brightness: Brightness.dark,
         ),
       ),

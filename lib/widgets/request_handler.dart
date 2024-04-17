@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:app_skeleton/providers/user_images.dart';
+import 'package:app_skeleton/widgets/auth_handler.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
@@ -15,11 +16,13 @@ Future<String> imageToBase64(File imageFile) async {
 
 // Based on what Roberto Neto did
 Future<void> uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) async {
+  String? tokenID = await getFirebaseTokenID();
   Uri uri = Uri.parse('http://172.28.188.65:8000/images/');
   // http.MultipartRequest request = http.MultipartRequest('POST', uri);
   http.Request request = http.Request('POST', uri);
   var headers = {
     'Content-Type': 'application/json',
+    // 'Authorization': 'Bearer $tokenID',
   };
   request.headers.addAll(headers);
 

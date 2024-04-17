@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:app_skeleton/models/image.dart';
 import 'package:app_skeleton/providers/user_images.dart';
+import 'package:app_skeleton/widgets/auth_handler.dart';
 import 'package:app_skeleton/widgets/date_replacer.dart';
 import 'package:app_skeleton/widgets/image_input.dart';
 import 'package:flutter/material.dart';
@@ -49,10 +49,13 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
 
     final creationDate = dateReplaceAll(DateTime.now().toString());
 
+    final userInfo = getMapUserInfo();
+
     ref.read(userImagesProvider.notifier).addPhoto(
           creationDate,
           _selectedImage!,
-          uuid.v4(),
+          userInfo['uid']!,
+          userInfo['email']!,
         );
 
     Navigator.of(context).pop();

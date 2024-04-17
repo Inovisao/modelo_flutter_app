@@ -8,22 +8,24 @@ import 'package:sqflite/sqlite_api.dart';
 
 // Opens the SQlite local database for saving images
 Future<Database> _getDatabase() async {
-  // for debug purposes, dropping the table
-  // bool dropTable = true;
 
   final dbPath = await sql.getDatabasesPath();
+
+  // sql.deleteDatabase(path.join(dbPath, 'images.db'));
 
   final db = await sql.openDatabase(
     path.join(dbPath, 'images.db'),
     onCreate: (db, version) {
       return db.execute(
-        'CREATE TABLE user_images(id TEXT PRIMARY KEY, user_id TEXT, creation_date TEXT NOT NULL, image_url TEXT NOT NULL, uploaded INTEGER DEFAULT 0);',
+        'CREATE TABLE user_images(id TEXT PRIMARY KEY, user_id TEXT, creation_date TEXT NOT NULL, image_url TEXT NOT NULL, email TEXT NOT NULL);',
       );
     },
     version: 1,
   );
 
   // for debug purposes, dropping the table
+    // for debug purposes, dropping the table
+  // bool dropTable = true;
   // if(dropTable){
   //   await db.delete('user_images');
   // }
@@ -46,7 +48,7 @@ class UserImagesNotifier extends StateNotifier<List<Photo>> {
             userId: row['user_id'] as String,
             creationDate: row['creation_date'] as String,
             image: File(row['image_url'] as String),
-            isUploaded: row['uploaded'] as int,
+            email: row['email'] as String,
           ),
         )
         .toList();
@@ -56,18 +58,23 @@ class UserImagesNotifier extends StateNotifier<List<Photo>> {
 
   // Add new image to database
   void addPhoto(
-      String creationDate, File imageTemp, String userId) async {
+    String creationDate,
+    File imageTemp,
+    String userId,
+    String email,
+  ) async {
     // Obtains permanent db path for the photo
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final filename = path.basename(imageTemp.path);
-    final copiedImage =
-        await imageTemp.copy('${appDir.path}/$filename');
+    final copiedImage = await imageTemp.copy('${appDir.path}/$filename');
 
     // save photo with creator, date of creation and file info
     final newImageEntry = Photo(
-        creationDate: creationDate,
-        image: copiedImage,
-        userId: userId);
+      creationDate: creationDate,
+      image: copiedImage,
+      userId: userId,
+      email: email,
+    );
 
     final db = await _getDatabase();
     db.insert('user_images', {
@@ -75,7 +82,7 @@ class UserImagesNotifier extends StateNotifier<List<Photo>> {
       'user_id': newImageEntry.userId,
       'creation_date': newImageEntry.creationDate,
       'image_url': newImageEntry.image.path,
-      'uploaded': newImageEntry.isUploaded,
+      'email': newImageEntry.email,
     });
 
     state = [newImageEntry, ...state];

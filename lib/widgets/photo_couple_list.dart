@@ -69,9 +69,12 @@ class _PhotoListState extends ConsumerState<PhotoList> {
                 Text('Sent at ${widget.photo[index].creationDate}'),
             // If the image was uploaded yet, pending
             // TODO: check what to put here, upload status or other info
-            trailing: widget.photo[index].isUploaded == 0
+            trailing: 0 == 0
                 ? const Icon(Icons.file_upload_off)
                 : const Icon(Icons.file_upload),
+            // trailing: widget.photo[index].email == 0
+            //     ? const Icon(Icons.file_upload_off)
+            //     : const Icon(Icons.file_upload),
           ),
         );
       },

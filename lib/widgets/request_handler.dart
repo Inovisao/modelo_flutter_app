@@ -15,14 +15,15 @@ Future<String> imageToBase64(File imageFile) async {
 }
 
 // Based on what Roberto Neto did
-Future<void> uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) async {
+Future<void> uploadObjectList(
+    List<Photo> photos, UserImagesNotifier notifier) async {
   String? tokenID = await getFirebaseTokenID();
   Uri uri = Uri.parse('http://172.28.188.65:8000/images/');
   // http.MultipartRequest request = http.MultipartRequest('POST', uri);
   http.Request request = http.Request('POST', uri);
   var headers = {
     'Content-Type': 'application/json',
-    // 'Authorization': 'Bearer $tokenID',
+    'Authorization': 'Token $tokenID',
   };
   request.headers.addAll(headers);
 
@@ -36,15 +37,16 @@ Future<void> uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) a
       fields.add({
         "user_id": photo.userId,
         "created_at": photo.creationDate,
-        "image": base64Image
-      });   
+        "image": base64Image,
+        "email": photo.email,
+      });
     }
     request.body = json.encode(fields);
 
     // preparing to send the actual request
     var response = await http.Response.fromStream(await request.send().timeout(const Duration(seconds: 10)));
 
-    if (response.statusCode == 201){
+    if (response.statusCode == 501) {
       log('Request sent successfully');
       for (Photo photo in photos) {
         notifier.removePhotos(photo.id, photo.image);

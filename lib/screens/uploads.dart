@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:app_skeleton/providers/user_images.dart';
 import 'package:app_skeleton/screens/choose_image.dart';
 import 'package:app_skeleton/widgets/photo_couple_list.dart';
@@ -16,6 +18,7 @@ class UploadsScreen extends ConsumerStatefulWidget {
 
 class _UploadsScreenState extends ConsumerState<UploadsScreen> {
   late Future<void> _photosFuture;
+  bool _uploading = false;
 
   @override
   // Listen to provider to check for existing photos, and load them in order of upload
@@ -47,15 +50,21 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.upload),
-            onPressed: () {
+            onPressed: () async {
               setState(
                 () {
-                  uploadObjectList(
-                    userPhotos,
-                    photoNotifier,
-                  );
+                  _uploading = true;
                 },
               );
+              try {
+                await uploadObjectList(userPhotos, photoNotifier);
+                setState(() {
+                  _uploading = false;
+                });
+              } catch (e) {
+                _uploading = false;
+                log('Error: ${e}');
+              }
             },
           ),
         ],
@@ -64,17 +73,21 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
       // Loading indicator
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: FutureBuilder(
-          future: _photosFuture,
-          builder: (context, snapshot) =>
-              snapshot.connectionState == ConnectionState.waiting
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : PhotoList(
-                      photo: userPhotos,
-                    ),
-        ),
+        child: _uploading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : FutureBuilder(
+                future: _photosFuture,
+                builder: (context, snapshot) =>
+                    snapshot.connectionState == ConnectionState.waiting
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : PhotoList(
+                            photo: userPhotos,
+                          ),
+              ),
       ),
     );
   }

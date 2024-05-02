@@ -30,7 +30,7 @@ Future<dynamic> createFutureRequest(
     "image": base64Image,
     "email": photo.email,
   });
-
+  
   // Create and send the request
   var response = await http.post(
     uri,
@@ -43,12 +43,13 @@ Future<dynamic> createFutureRequest(
     log('Request sent successfully');
     notifier.removePhotos(photo.id, photo.image);
   } else {
-    log('Failed to save images. Status code: ${response.statusCode}');
+    log('Failed to save images. ${response.body}, Status code: ${response.statusCode}');
   }
 }
 
 // Based on what Roberto Neto did
-Future<void> uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) async {
+Future<void> uploadObjectList(
+    List<Photo> photos, UserImagesNotifier notifier) async {
   String? tokenID = await getFirebaseTokenID();
   Uri uri = Uri.parse('http://172.28.188.65:8000/images/');
   var headers = {
@@ -65,6 +66,5 @@ Future<void> uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) a
 
     // Wait for all requests to complete
     futureGroup.close();
-
   }
 }

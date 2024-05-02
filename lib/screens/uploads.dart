@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:app_skeleton/providers/user_images.dart';
 import 'package:app_skeleton/screens/choose_image.dart';
 import 'package:app_skeleton/widgets/photo_couple_list.dart';
@@ -33,6 +31,16 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
     final userPhotos = ref.watch(userImagesProvider);
     String counter = '${userPhotos.length} items in queue';
 
+    Container uploadMessageContainer(String text) {
+      return Container(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text(text)],
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(counter),
@@ -61,9 +69,17 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
                 setState(() {
                   _uploading = false;
                 });
-              } catch (e) {
-                _uploading = false;
-                log('Error: ${e}');
+                // Check mounted context after async gap
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Upload Successful')));
+                }
+              } catch (error) {
+                setState(() {
+                  _uploading = false;
+                });
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Upload failed. Error: ${error.toString()}')));
+                }
               }
             },
           ),
@@ -89,6 +105,8 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
                           ),
               ),
       ),
+      bottomSheet:
+          _uploading ? uploadMessageContainer('Upload in progress') : null,
     );
   }
 }

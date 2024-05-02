@@ -8,7 +8,6 @@ import 'package:sqflite/sqlite_api.dart';
 
 // Opens the SQlite local database for saving images
 Future<Database> _getDatabase() async {
-
   final dbPath = await sql.getDatabasesPath();
 
   // sql.deleteDatabase(path.join(dbPath, 'images.db'));
@@ -24,7 +23,7 @@ Future<Database> _getDatabase() async {
   );
 
   // for debug purposes, dropping the table
-    // for debug purposes, dropping the table
+  // for debug purposes, dropping the table
   // bool dropTable = true;
   // if(dropTable){
   //   await db.delete('user_images');
@@ -94,9 +93,10 @@ class UserImagesNotifier extends StateNotifier<List<Photo>> {
 
     await image.delete();
 
-    db.delete('user_images', where: "id = ?", whereArgs: [id]);
+    await db.delete('user_images', where: "id = ?", whereArgs: [id]);
 
-    state = [];
+    state.removeWhere((photoData) => 'id' == id);
+    state = [...state];
   }
 }
 

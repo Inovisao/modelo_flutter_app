@@ -9,6 +9,8 @@ import 'dart:async';
 
 import 'package:app_skeleton/models/image.dart';
 
+const apiSendImageUrl = 'http://172.28.188.65:8000/images/';
+
 Future<String> imageToBase64(File imageFile) async {
   List<int> imageBytes = await imageFile.readAsBytes();
   String base64Image = base64Encode(imageBytes);
@@ -51,7 +53,7 @@ Future<dynamic> createFutureRequest(
 Future<void> uploadObjectList(
     List<Photo> photos, UserImagesNotifier notifier) async {
   String? tokenID = await getFirebaseTokenID();
-  Uri uri = Uri.parse('http://172.28.188.65:8000/images/');
+  Uri uri = Uri.parse(apiSendImageUrl);
   var headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Token $tokenID',

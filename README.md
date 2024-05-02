@@ -44,6 +44,8 @@ Varias opcoes de dispositivos estaram disponiveis, como o seu sistema operaciona
 
 Futuramente, APKs e executaveis serao disponibilizados via a aba de Releases.
 
+Para rodar localmente durante desenvolvimento, sera necessario modificar a variavel `apiSendImageUrl` em `lib/widgets/request_handler.dart` para a URL da maquina onde a API esta rodando seguida da porta sendo usada. Este IP tambem deve ser configurado na API na variavel `ALLOWED_HOSTS`.
+
 ## Hierarquia de pastas
 
 As Pastas deste projeto seguem o modelo base de novos projetos do Flutter. A seguir, estao detalhados as pastas e arquivos de importancia para desenvolvimento geral; Para situacoes mais especificas (como instalacao de certas bibliotecas e habilitacao de certas funcoes), verifique as instrucoes da dependencia ou a [documentacao geral do FLutter](https://docs.flutter.dev/):

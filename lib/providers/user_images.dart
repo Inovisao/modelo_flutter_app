@@ -23,7 +23,6 @@ Future<Database> _getDatabase() async {
   );
 
   // for debug purposes, dropping the table
-  // for debug purposes, dropping the table
   // bool dropTable = true;
   // if(dropTable){
   //   await db.delete('user_images');

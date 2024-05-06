@@ -4,6 +4,7 @@ import 'package:app_skeleton/providers/user_images.dart';
 import 'package:app_skeleton/widgets/auth_handler.dart';
 import 'package:app_skeleton/widgets/date_replacer.dart';
 import 'package:app_skeleton/widgets/image_input.dart';
+import 'package:app_skeleton/widgets/modal_sheets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,29 +22,8 @@ class _ImagePickerScreenState extends ConsumerState<ImagePickerScreen> {
 
   void _savePhotos() {
     if (_selectedImage == null) {
-      showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SizedBox(
-            height: 130,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const Text('Please choose an image'),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Close'))
-                ],
-              ),
-            ),
-          );
-        },
-      );
+      warningModalBottomSheet(
+          context, 'No image selected. Please choose an image');
       return;
     }
 

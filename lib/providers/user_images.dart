@@ -63,7 +63,14 @@ class UserImagesNotifier extends StateNotifier<List<Photo>> {
   ) async {
     // Obtains permanent db path for the photo
     final appDir = await syspaths.getApplicationDocumentsDirectory();
-    final filename = path.basename(imageTemp.path);
+    String filename = path.basename(imageTemp.path);
+    bool fileAlreadyExists = File('${appDir.path}/$filename').existsSync();
+    int indexOfCopies = 1;
+    while (fileAlreadyExists){
+      filename = 'copy${indexOfCopies}_$filename';
+      fileAlreadyExists = File('${appDir.path}/$filename').existsSync();
+      indexOfCopies++;
+    }
     final copiedImage = await imageTemp.copy('${appDir.path}/$filename');
 
     // save photo with creator, date of creation and file info

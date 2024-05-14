@@ -1,3 +1,4 @@
+import 'package:app_skeleton/models/image.dart';
 import 'package:app_skeleton/providers/user_images.dart';
 import 'package:app_skeleton/screens/choose_image.dart';
 import 'package:app_skeleton/widgets/photo_couple_list.dart';
@@ -25,18 +26,50 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
     _photosFuture = ref.read(userImagesProvider.notifier).loadPhotos();
   }
 
+  void startUpload(
+      UserImagesNotifier photoNotifier, List<Photo> userPhotos) async {
+    setState(
+      () {
+        _uploading = true;
+      },
+    );
+    try {
+      await uploadObjectList(userPhotos, photoNotifier);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Upload Successful'),
+        ),
+      );
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Upload Failed. Error: ${error.toString()}'),
+        ),
+      );
+    } finally {
+      setState(() {
+        _uploading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final photoNotifier = ref.watch(userImagesProvider.notifier);
     final userPhotos = ref.watch(userImagesProvider);
     String counter = '${userPhotos.length} items in queue';
 
-    Container uploadMessageContainer(String text) {
-      return Container(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text(text)],
+    Widget buildUploadInProgressIndicator() {
+      return const Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(
+              height: 8,
+            ),
+            Text('Upload in progress'),
+          ],
         ),
       );
     }
@@ -58,29 +91,8 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.upload),
-            onPressed: () async {
-              setState(
-                () {
-                  _uploading = true;
-                },
-              );
-              try {
-                await uploadObjectList(userPhotos, photoNotifier);
-                setState(() {
-                  _uploading = false;
-                });
-                // Check mounted context after async gap
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Upload Successful')));
-                }
-              } catch (error) {
-                setState(() {
-                  _uploading = false;
-                });
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Upload failed. Error: ${error.toString()}')));
-                }
-              }
+            onPressed: () {
+              startUpload(photoNotifier, userPhotos);
             },
           ),
         ],
@@ -90,9 +102,7 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: _uploading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
+            ? buildUploadInProgressIndicator()
             : FutureBuilder(
                 future: _photosFuture,
                 builder: (context, snapshot) =>
@@ -105,8 +115,6 @@ class _UploadsScreenState extends ConsumerState<UploadsScreen> {
                           ),
               ),
       ),
-      bottomSheet:
-          _uploading ? uploadMessageContainer('Upload in progress') : null,
     );
   }
 }

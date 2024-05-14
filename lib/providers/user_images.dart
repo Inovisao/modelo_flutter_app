@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:app_skeleton/models/image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -95,6 +96,7 @@ class UserImagesNotifier extends StateNotifier<List<Photo>> {
 
   // Removes a photo given its id
   void removePhotos(String id, File image) async {
+    log('State before deletion: ${state.length}');
     final db = await _getDatabase();
 
     await image.delete();
@@ -103,6 +105,7 @@ class UserImagesNotifier extends StateNotifier<List<Photo>> {
 
     state.removeWhere((photoData) => 'id' == id);
     state = [...state];
+    log('State after deletion: ${state.length}');
   }
 }
 

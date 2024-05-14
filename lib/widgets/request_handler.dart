@@ -26,32 +26,35 @@ Future<dynamic> createFutureRequest(
   final base64Image = await imageToBase64(photo.image);
 
   // Prepare request body
-  var requestBody = json.encode({
-    "user_id": photo.userId,
-    "created_at": photo.creationDate,
-    "image": base64Image,
-    "email": photo.email,
-  });
-  
-  // Create and send the request
-  var response = await http.post(
-    uri,
-    headers: headers,
-    body: requestBody,
-  );
+  try {
+    var requestBody = json.encode({
+      "user_id": photo.userId,
+      "created_at": photo.creationDate,
+      "image": base64Image,
+      "email": photo.email,
+    });
 
-  // Handle response
-  if (response.statusCode == 201) {
-    log('Request sent successfully');
-    notifier.removePhotos(photo.id, photo.image);
-  } else {
-    log('Failed to save images. ${response.body}, Status code: ${response.statusCode}');
+    // Create and send the request
+    var response = await http.post(
+      uri,
+      headers: headers,
+      body: requestBody,
+    );
+
+    // Handle response
+    if (response.statusCode == 201) {
+      log('Request sent successfully');
+      notifier.removePhotos(photo.id, photo.image);
+    } else {
+      log('Failed to save images. ${response.body}, Status code: ${response.statusCode}');
+    }
+  } on Exception catch (error) {
+    log('Error on request creation: $error');
   }
 }
 
 // Based on what Roberto Neto did
-Future<void> uploadObjectList(
-    List<Photo> photos, UserImagesNotifier notifier) async {
+void uploadObjectList(List<Photo> photos, UserImagesNotifier notifier) async {
   String? tokenID = await getFirebaseTokenID();
   Uri uri = Uri.parse(apiSendImageUrl);
   var headers = {
@@ -66,8 +69,11 @@ Future<void> uploadObjectList(
       futureGroup.add(createFutureRequest(uri, headers, photo, notifier));
     }
 
+    log('added sucessfully');
+
     // Wait for all requests to complete
     futureGroup.close();
-    
+
+    log('sent and deleted sucessfully');
   }
 }

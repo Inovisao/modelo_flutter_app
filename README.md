@@ -1,7 +1,7 @@
 # modelo_flutter_app
 
 ### Autores
-- Fabio Prestes Cesar Rezende
+- Fabio Rezende
 
 Projeto de aplicativo utilizando framework Flutter. Atualmente baseando-se nas condicoes do projeto de Pano de Batida.
 
